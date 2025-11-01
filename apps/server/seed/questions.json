@@ -1,0 +1,47 @@
+[
+  {
+    "_id": "q1",
+    "title": "Two Sum",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+    "difficulty": "Easy",
+    "tags": ["Array", "HashMap"],
+    "sampleInput": "nums = [2,7,11,15], target = 9",
+    "sampleOutput": "[0,1]"
+  },
+  {
+    "_id": "q2",
+    "title": "Valid Parentheses",
+    "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+    "difficulty": "Easy",
+    "tags": ["Stack", "String"],
+    "sampleInput": "s = '()[]{}'",
+    "sampleOutput": "true"
+  },
+  {
+    "_id": "q3",
+    "title": "Longest Substring Without Repeating Characters",
+    "description": "Given a string s, find the length of the longest substring without repeating characters.",
+    "difficulty": "Medium",
+    "tags": ["String", "Sliding Window"],
+    "sampleInput": "s = 'abcabcbb'",
+    "sampleOutput": "3"
+  },
+  {
+    "_id": "q4",
+    "title": "Maximum Subarray",
+    "description": "Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.",
+    "difficulty": "Medium",
+    "tags": ["Array", "DP"],
+    "sampleInput": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+    "sampleOutput": "6"
+  },
+  {
+    "_id": "q5",
+    "title": "Word Ladder",
+    "description": "Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord.",
+    "difficulty": "Hard",
+    "tags": ["BFS", "Graph"],
+    "sampleInput": "beginWord = 'hit', endWord = 'cog', wordList = ['hot','dot','dog','lot','log','cog']",
+    "sampleOutput": "5"
+  }
+]
