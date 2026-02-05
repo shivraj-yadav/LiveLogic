@@ -1,292 +1,218 @@
-# LiveLogic - Real-Time Collaborative Code Interview Platform
+# LiveLogic
 
-A cutting-edge platform for conducting real-time collaborative coding interviews with shared code execution, intelligent synchronization, and a professional interface.
+LiveLogic is a comprehensive realtime coding interview platform that enables interviewers and candidates to collaborate seamlessly in a shared coding environment. Built with modern web technologies, it provides an intuitive interface for conducting technical interviews with support for multiple programming languages and instant code execution.
 
-## 🚀 Project Structure
+## Features
 
-```
-LiveLogic-main/
-├── frontend/          # React frontend application
-│   ├── src/
-│   │   ├── components/
-│   │   ├── routes/
-│   │   ├── lib/
-│   │   └── hooks/
-│   ├── package.json
-│   └── .env.example
-├── backend/           # Express backend server
-│   ├── src/
-│   │   ├── models/
-│   │   ├── config/
-│   │   └── index.ts
-│   ├── seed/
-│   ├── package.json
-│   └── .env.example
-└── README.md
-```
+### 🎭 Role-Based Collaboration
+- **Interviewer Mode**: Full control over question selection and room management
+- **Candidate Mode**: Collaborative coding with realtime synchronization
+- Automatic role assignment based on room entry order
 
----
+### 💻 Realtime Shared Editor
+- Collaborative code editing with instant synchronization
+- Support for JavaScript, Python, Java, and C++
+- Persistent state management with MongoDB
+- Syntax highlighting and language-specific features
 
-## 🚀 Quick Start
+### 📚 Built-in Question Bank
+- Curated coding problems with varying difficulty levels
+- Searchable by tags and difficulty
+- Instant question loading for all participants
+- Structured problem descriptions with examples
+
+### ⚡ Multi-Language Code Execution
+- Execute code in multiple programming languages
+- Integration with Judge0 and JDoodle execution providers
+- Display execution time and memory statistics
+- Real-time result broadcasting to all participants
+
+## Tech Stack
+
+### Frontend
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with shadcn-inspired components
+- **Real-time**: Socket.io Client
+- **State Management**: React Hooks
+
+### Backend
+- **Runtime**: Node.js 18+
+- **Framework**: Express with TypeScript
+- **WebSockets**: Socket.io
+- **Database**: MongoDB with Mongoose ODM
+- **Code Execution**: Judge0 / JDoodle API integration
+
+### Infrastructure
+- **Frontend Hosting**: Vercel
+- **Backend Hosting**: Render 
+- **Database**: MongoDB Atlas
+
+## Quick Start
 
 ### Prerequisites
-- Node.js 18+ installed
-- MongoDB running on localhost:27017
-- Git for version control
 
-### Installation & Setup
+Ensure you have the following installed:
+- Node.js 18 or higher
+- Git
+- MongoDB instance (local or Atlas)
+
+### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd LiveLogic-main
+   git clone https://github.com/shivraj-yadav/LiveLogic.git
+   cd LiveLogic
    ```
 
-2. **Install backend dependencies**
+2. **Backend Setup**
    ```bash
    cd backend
    npm install
-   cp .env.example .env
-   # Configure environment variables
    ```
 
-3. **Install frontend dependencies**
-   ```bash
-   cd ../frontend
-   npm install
-   cp .env.example .env
-   # Configure environment variables
+   Create `backend/.env`:
+   ```env
+   MONGO_URI=mongodb+srv://<user>:<password>@<cluster>/<db-name>?retryWrites=true&w=majority
+   CORS_ORIGINS=http://localhost:5173,https://your-frontend.vercel.app
+   
+   # Optional: Code execution provider
+   EXEC_PROVIDER=judge0
+   EXEC_ENDPOINT=https://your-judge0-instance
+   EXEC_API_KEY=your-exec-api-key
+   EXEC_API_SECRET=your-exec-api-secret
+   INTERVIEWER_END_GRACE_MS=15000
    ```
 
-4. **Start MongoDB**
+   Start the backend server:
    ```bash
-   # Make sure MongoDB is running on localhost:27017
-   mongod
-   ```
-
-5. **Start backend server**
-   ```bash
-   cd backend
    npm run dev
-   # Server runs on: http://localhost:3000
+   # Server runs on http://localhost:3000
    ```
 
-6. **Start frontend**
+3. **Frontend Setup**
    ```bash
    cd frontend
-   npm run dev
-   # Frontend runs on: http://localhost:5173
+   npm install
    ```
 
----
+   Create `frontend/.env`:
+   ```env
+   VITE_API_BASE_URL=http://localhost:3000
+   VITE_SOCKET_URL=http://localhost:3000
+   ```
 
-## ⚙️ Configuration
+   Start the frontend development server:
+   ```bash
+   npm run dev
+   # App runs on http://localhost:5173
+   ```
 
-### Backend Environment Variables (`backend/.env`)
+4. **Test the Application**
+   - Open `http://localhost:5173` in your browser
+   - Create a room as an Interviewer
+   - Join the same room from another browser/tab as a Candidate
+   - Start collaborating!
+
+## Deployment
+
+### Frontend (Vercel)
+
+**Configuration:**
+- **Root Directory**: `frontend`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+
+**Environment Variables:**
 ```env
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/codesync
+VITE_API_BASE_URL=https://your-backend.onrender.com
+VITE_SOCKET_URL=https://your-backend.onrender.com
+```
+
+### Backend (Render)
+
+**Configuration:**
+- **Root Directory**: `backend`
+- **Build Command**: `npm install && npm run build`
+- **Start Command**: `npm start`
+
+**Environment Variables:**
+```env
+MONGO_URI=mongodb+srv://<user>:<password>@<cluster>/<db-name>
+CORS_ORIGINS=https://your-frontend.vercel.app
 EXEC_PROVIDER=judge0
-EXEC_ENDPOINT=https://judge0-ce.p.rapidapi.com
-EXEC_API_KEY=your_rapidapi_key_here
-CORS_ORIGINS=http://localhost:5173
+EXEC_ENDPOINT=https://your-judge0-instance
+EXEC_API_KEY=your-api-key
+EXEC_API_SECRET=your-api-secret
+INTERVIEWER_END_GRACE_MS=15000
 ```
 
-### Frontend Environment Variables (`frontend/.env`)
-```env
-VITE_API_BASE_URL=http://localhost:3000
-VITE_SOCKET_URL=http://localhost:3000
+## Project Structure
+
+```
+LiveLogic/
+├── frontend/                 # React + Vite application
+│   ├── src/
+│   │   ├── routes/          # Page components (Home, Room)
+│   │   ├── components/      # Reusable UI components
+│   │   ├── lib/             # Socket client and utilities
+│   │   └── hooks/           # Custom React hooks
+│   └── package.json
+│
+├── backend/                  # Node.js + Express API
+│   ├── src/
+│   │   ├── config/          # Database connection and seeding
+│   │   ├── models/          # Mongoose schemas (Room, Question, Execution)
+│   │   └── index.ts         # Main server and Socket.io handlers
+│   ├── seed/                # Database seed data
+│   └── package.json
+│
+└── README.md
 ```
 
----
+## Socket.io Events
 
-## 🌐 Production Deployment
+### Client → Server
+- `join-room`: Join a room with `roomId` and `displayName`
+- `leave-room`: Leave the current room
+- `code-change`: Update shared editor content
+- `language-change`: Change programming language
+- `set-question`: Select a question (interviewer only)
+- `run-execute`: Execute code and get results
 
-### Recommended Architecture
-- **Backend**: Render.com (WebSocket support)
-- **Frontend**: Vercel (Edge deployment)
+### Server → Client
+- `participants-updated`: Broadcast updated participant list
+- `room-ended`: Notify that the room has been closed
+- `execution-result`: Broadcast code execution results
 
-### Deployment Steps
+## Contributing
 
-1. **Deploy Backend to Render**
-   - Root directory: `apps/server`
-   - Build command: `npm ci && npm run build`
-   - Start command: `npm run start`
-   - Environment variables: Configure production values
-
-2. **Deploy Frontend to Vercel**
-   - Root directory: `apps/web`
-   - Build command: `npm run build`
-   - Output directory: `dist`
-   - Environment variables: Set production API URLs
-
-### Production Environment Variables
-
-**Frontend (Vercel):**
-```env
-VITE_API_BASE_URL=https://your-render-app.onrender.com
-VITE_SOCKET_URL=https://your-render-app.onrender.com
-```
-
-**Backend (Render):**
-```env
-NODE_ENV=production
-PORT=3000
-CORS_ORIGINS=https://your-vercel-app.vercel.app
-EXEC_PROVIDER=judge0
-EXEC_ENDPOINT=https://judge0-ce.p.rapidapi.com
-EXEC_API_KEY=your_production_api_key
-```
-
----
-
-## 📊 Socket.io Events
-
-### Room Management
-- `join-room` - Join a collaborative room
-- `leave-room` - Leave current room
-- `participants-updated` - Broadcast participant changes
-
-### Code Collaboration
-- `code-change` - Real-time code synchronization
-- `language-change` - Change programming language
-- `reset-document` - Clear editor content
-
-### Question Management
-- `set-question` - Select interview question
-- `questions-loaded` - Load question bank
-
-### Code Execution
-- `run-execute` - Execute code with test cases
-- `execution-result` - Broadcast execution results
-
----
-
-## 🧪 Development Workflow
-
-### Key Components
-
-**Frontend (`apps/web/src/`):**
-- `routes/Room.tsx` - Main collaborative interface
-- `routes/Home.tsx` - Landing and room creation
-- `components/room/` - Room-specific components
-- `components/ui/` - Reusable UI components (shadcn/ui)
-- `lib/socket.ts` - Socket.io client configuration
-- `theme/tokens.ts` - Design system tokens
-
-**Backend (`apps/server/src/`):**
-- `index.ts` - Main server and Socket.io logic
-- `seed/questions.json` - Interview question database
-
-### Development Scripts
-```bash
-# Development
-npm run dev:web      # Start frontend
-npm run dev:server   # Start backend
-
-# Building
-npm run build:web    # Build frontend
-npm run build:server # Build backend
-
-# Production
-npm run start:server # Start production server
-
-# Code Quality
-npm run lint         # ESLint
-npm run format       # Prettier
-```
-
----
-
-## 🎯 Use Cases
-
-### For Interviewers
-- Conduct technical interviews remotely
-- Share coding problems in real-time
-- Monitor candidate thought process
-- Evaluate problem-solving approach
-- Maintain interview session records
-
-### For Candidates
-- Practice collaborative coding
-- Experience real interview environment
-- Receive immediate feedback
-- Showcase technical communication skills
-
-### For Educational Institutions
-- Conduct live coding classes
-- Host programming competitions
-- Facilitate peer programming sessions
-- Provide interactive learning experiences
-
----
-
-## 🔧 Technical Highlights
-
-### Performance Optimizations
-- **Debounced Code Sync**: Prevents network flooding during rapid typing
-- **Efficient State Management**: Minimizes re-renders with React hooks
-- **Lazy Loading**: Components load on-demand for faster initial load
-- **WebSocket Connection Pooling**: Efficient resource utilization
-
-### Security Features
-- **CORS Configuration**: Secure cross-origin requests
-- **Helmet.js**: Security headers for Express
-- **Input Validation**: Sanitized user inputs
-- **Rate Limiting**: Prevents abuse of execution APIs
-
-### Code Quality
-- **TypeScript**: Full type safety across the stack
-- **ESLint + Prettier**: Consistent code formatting
-- **Component Architecture**: Modular, reusable components
-- **Error Boundaries**: Graceful error handling
-
----
-
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Here's how to get started:
+We welcome contributions from the community! Here's how you can help:
 
 1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Commit your changes**: `git commit -m 'Add amazing feature'`
-4. **Push to the branch**: `git push origin feature/amazing-feature`
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **Commit your changes**
+   ```bash
+   git commit -m "Add amazing feature"
+   ```
+4. **Push to the branch**
+   ```bash
+   git push origin feature/amazing-feature
+   ```
 5. **Open a Pull Request**
 
----
+Please ensure your code follows the existing style and includes appropriate tests.
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
+## Acknowledgments
 
-## 🙏 Acknowledgments
+- Built with modern web technologies
+- Inspired by the need for better remote technical interviews
+- Community-driven development
 
-- **Monaco Editor** - For the powerful code editing experience
-- **Socket.io** - For seamless real-time communication
-- **shadcn/ui** - For beautiful, accessible UI components
-- **Judge0** - For reliable code execution services
-- **Vercel & Render** - For excellent hosting platforms
-
----
-
-## 📞 Contact & Support
-
-- **Author**: Shivraj Yadav
-- **Live Demo**: [https://live-logic.vercel.app](https://live-logic.vercel.app)
-- **Issues**: [GitHub Issues](https://github.com/shivraj-yadav/LiveLogic/issues)
-
-
----
-
-<div align="center">
-
-**⭐ Star this repository if it helped you!**
-
-Made with ❤️ for the developer community
-
-</div>
